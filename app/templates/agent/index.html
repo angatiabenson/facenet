@@ -1,36 +1,180 @@
-<!DOCTYPE html>
+{% load static %}
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Data</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'app/img/logo.svg' %}">
+    <title>Tiny Dashboard - A Bootstrap Dashboard Template</title>
+    <!-- Simple bar CSS -->
+    <link rel="stylesheet" href="{% static 'app/css/simplebar.css' %}">
+    <!-- Fonts CSS -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <!-- Icons CSS -->
+    <link rel="stylesheet" href="{% static 'app/css/feather.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/dataTables.bootstrap4.css' %}">
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="{% static 'app/css/daterangepicker.css' %}">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="{% static 'app/css/app-light.css' %}" id="lightTheme">
+    <link rel="stylesheet" href="{% static 'app/css/app-dark.css' %}" id="darkTheme" disabled>
 </head>
 
-<body>
-    <h2>User Data</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Age</th>
-                <th>Region</th>
-                <th>Image Link</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for data in user_data %}
-            <tr>
-                <td>{{ data.name }}</td>
-                <td>{{ data.phone }}</td>
-                <td>{{ data.age }}</td>
-                <td>{{ data.region }}</td>
-                <td><a href="{{ data.image_link }}" target="_blank">View Image</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<body class="container-fluid light">
+    <div class="wrapper">
+        <main role="main" class="main-content">
+            <div class="row my-5">
+                <div class="col-md-6">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">Add New Data</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label for="simpleinput">Name</label>
+                                    <input name="name" type="text" id="simpleinput" class="form-control"
+                                        placeholder="Enter name" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="example-email">Phone</label>
+                                    <input name="phone" type="text" id="example-email" name="example-email"
+                                        class="form-control" placeholder="Enter Email" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="example-password">Age</label>
+                                    <input name="age" type="number" id="example-password" class="form-control"
+                                        value="password" placeholder="Enter Age" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="example-palaceholder">Region</label>
+                                    <input name="region" type="text" id="example-palaceholder" class="form-control"
+                                        placeholder="Enter Region" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input name="image" type="file" id="example-palaceholder" class="form-control"
+                                        placeholder="Enter Region" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <button type="submit" class="btn btn-primary btn-lg float-right">Submit</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> <!-- / .card -->
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">View Data</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <table class="table datatables" id="dataTable-1">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Region</th>
+                                            <th>Image</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Angatia Benson</td>
+                                            <td>0748355080</td>
+                                            <td>Central</td>
+                                            <td>
+                                                <div class="col">
+                                                    <img src="{% static 'app/img/logo.svg' %}" alt=""
+                                                        class="thumbnail-sm img-fluid rounded">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Angatia Benson</td>
+                                            <td>0748355080</td>
+                                            <td>Central</td>
+                                            <td>
+                                                <div class="col">
+                                                    <img src="{% static 'app/img/logo.svg' %}" alt=""
+                                                        class="thumbnail-sm img-fluid rounded">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Angatia Benson</td>
+                                            <td>0748355080</td>
+                                            <td>Central</td>
+                                            <td>
+                                                <div class="col">
+                                                    <img src="{% static 'app/img/logo.svg' %}" alt=""
+                                                        class="thumbnail-sm img-fluid rounded">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Angatia Benson</td>
+                                            <td>0748355080</td>
+                                            <td>Central</td>
+                                            <td>
+                                                <div class="col">
+                                                    <img src="{% static 'app/img/logo.svg' %}" alt=""
+                                                        class="thumbnail-sm img-fluid rounded">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Angatia Benson</td>
+                                            <td>0748355080</td>
+                                            <td>Central</td>
+                                            <td>
+                                                <div class="col">
+                                                    <img src="{% static 'app/img/logo.svg' %}" alt=""
+                                                        class="thumbnail-sm img-fluid rounded">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div> <!-- / .card -->
+                </div>
+            </div>
+
+        </main> <!-- main -->
+    </div> <!-- .wrapper -->
+    <script src="{% static 'app/js/jquery.min.js' %}"></script>
+    <script src="{% static 'app/js/popper.min.js' %}"></script>
+    <script src="{% static 'app/js/moment.min.js' %}"></script>
+    <script src="{% static 'app/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'app/js/simplebar.min.js' %}"></script>
+    <script src="{% static 'app/js/daterangepicker.js' %}"></script>
+    <script src="{% static 'app/js/jquery.stickOnScroll.js' %}"></script>
+    <script src="{% static 'app/js/tinycolor-min.js' %}"></script>
+    <script src="{% static 'app/js/config.js' %}"></script>
+    <script src="{% static 'app/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'app/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script>
+        $('#dataTable-1').DataTable(
+            {
+                autoWidth: true,
+                "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]]
+            }); </script>
+    <script src="{% static 'app/js/apps.js' %}"></script>
 </body>
 
 </html>
