@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data</title>
+</head>
+
+<body>
+    <h2>User Data</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Age</th>
+                <th>Region</th>
+                <th>Image Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in user_data %}
+            <tr>
+                <td>{{ data.name }}</td>
+                <td>{{ data.phone }}</td>
+                <td>{{ data.age }}</td>
+                <td>{{ data.region }}</td>
+                <td><a href="{{ data.image_link }}" target="_blank">View Image</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
