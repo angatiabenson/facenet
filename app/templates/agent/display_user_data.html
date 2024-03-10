@@ -1,0 +1,97 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'app/img/logo.svg' %}">
+    <title>FaceNet | Dashboard</title>
+    <!-- Simple bar CSS -->
+    <link rel="stylesheet" href="{% static 'app/css/simplebar.css' %}">
+    <!-- Fonts CSS -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <!-- Icons CSS -->
+    <link rel="stylesheet" href="{% static 'app/css/feather.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/dataTables.bootstrap4.css' %}">
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="{% static 'app/css/daterangepicker.css' %}">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="{% static 'app/css/app-light.css' %}" id="lightTheme">
+    <link rel="stylesheet" href="{% static 'app/css/app-dark.css' %}" id="darkTheme" disabled>
+</head>
+
+<body class="container-fluid light">
+    <div class="wrapper">
+        <main role="main" class="main-content">
+            <div class="row my-5 justify-content-center">
+                <h1>SEARCH RESULTS</h1>
+            </div>
+            <div class="row my-5 justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">Search User Details by Image</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="row align-items-center">
+                                    <div class="col-md-5 text-center mb-5">
+                                        <div class="avatar avatar-xl">
+                                            <img src="{{ user_data.image }}" alt="..."
+                                                class="avatar-img rounded-circle">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-7">
+                                                <h4 class="mb-1">{{user_data.name}} - {{user_data.age}} yrs</h4>
+                                                <p class="small mb-3"><span
+                                                        class="badge badge-dark">{{user_data.region}}</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-md-7">
+                                                <p class="text-muted">The image was used to fetch this user data.</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="small mb-0 text-muted">Nec Urna Suscipit Ltd</p>
+                                                <p class="small mb-0 text-muted">P.O. Box 464, 5975 Eget Avenue</p>
+                                                <p class="small mb-0 text-muted">{{user_data.phone}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{% url 'home' %}" class="btn btn-primary btn-block">Back to Dashboard</a>
+                            </div>
+                        </div>
+                    </div> <!-- / .card -->
+                </div>
+            </div>
+        </main> <!-- main -->
+    </div> <!-- .wrapper -->
+    <script src="{% static 'app/js/jquery.min.js' %}"></script>
+    <script src="{% static 'app/js/popper.min.js' %}"></script>
+    <script src="{% static 'app/js/moment.min.js' %}"></script>
+    <script src="{% static 'app/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'app/js/simplebar.min.js' %}"></script>
+    <script src="{% static 'app/js/daterangepicker.js' %}"></script>
+    <script src="{% static 'app/js/jquery.stickOnScroll.js' %}"></script>
+    <script src="{% static 'app/js/tinycolor-min.js' %}"></script>
+    <script src="{% static 'app/js/config.js' %}"></script>
+    <script src="{% static 'app/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'app/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script>
+        $('#dataTable-1').DataTable(
+            {
+                autoWidth: true,
+                "lengthMenu": [[6, 12, 18, -1], [6, 12, 18, "All"]]
+            }); </script>
+    <script src="{% static 'app/js/apps.js' %}"></script>
+</body>
+
+</html>

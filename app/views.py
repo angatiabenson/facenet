@@ -11,7 +11,49 @@ from django.conf import settings
 import os
 
 
-@login_required
+def display_search_results(request):
+    user_id = request.session.pop('found_user_id', None)
+    if user_id:
+        user_data = UserData.objects.get(id=user_id)
+        return render(request, 'agent/display_user_data.html', {'user_data': user_data})
+    else:
+        return redirect('home')
+
+
+def upload_and_search(request):
+    if request.method == 'POST' and request.FILES['image']:
+        image = request.FILES['image']
+
+        # Temporarily save the image
+        fs = FileSystemStorage()
+        filename = fs.save(image.name, image)
+        image_path = fs.path(filename)
+
+        # Extract face data from the uploaded image
+        uploaded_face_data = extract_face_metadata(image_path)
+
+        # Attempt to find a matching user
+        user_data = None
+        for face_metadata in FaceMetadata.objects.all():
+            # Assuming the comparison logic
+            if compare_faces(face_metadata.face_encoding, uploaded_face_data):
+                user_data = face_metadata.user_data
+                break
+
+        # Clean up: delete the temporarily stored image
+        os.remove(image_path)
+
+        if user_data:
+            request.session['found_user_id'] = user_data.id
+            return redirect('search_results')
+        else:
+            # If no user is found, redirect and indicate user not found
+            messages.error(request, "No matching user found.")
+            return redirect('home')
+
+    return redirect('home')
+
+
 def user_data_list(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -35,7 +77,6 @@ def user_data_list(request):
         else:
             # Create UserData instance
             data = UserData.objects.create(
-                added_by=request.user,
                 name=name,
                 phone=phone,
                 age=age,
@@ -49,7 +90,7 @@ def user_data_list(request):
             )
         return redirect('home')
 
-    user_data = UserData.objects.filter(added_by=request.user)
+    user_data = UserData.objects.all()
     return render(request, 'agent/index.html', {'user_data': user_data})
 
 
