@@ -3,11 +3,50 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import UserData
+from .models import UserData, FaceMetadata
+from django.shortcuts import render, redirect
+from django.core.files.storage import FileSystemStorage
+import face_rec as fr
+from django.conf import settings
+import os
 
 
 @login_required
 def user_data_list(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        phone = request.POST['phone']
+        age = request.POST['age']
+        region = request.POST['region']
+        image = request.FILES['image']
+
+        # Process the image file
+        fs = FileSystemStorage()
+        filename = fs.save(image.name, image)
+        image_url = fs.url(filename)
+
+        # Create UserData instance
+        data = UserData.objects.create(
+            added_by=request.user,
+            name=name,
+            phone=phone,
+            age=age,
+            region=region,
+            image=image_url
+        )
+
+        # Getting the absolute filesystem path of the saved image
+        image_abs_path = os.path.join(settings.MEDIA_ROOT, filename)
+        face_data = fr.extract_face_metadata(image_abs_path)
+
+        FaceMetadata.objects.create(
+            user=data,
+            face_details=face_data
+        )
+
+        user_data = UserData.objects.filter(added_by=request.user)
+        return render(request, 'agent/index.html', {'user_data': user_data})
+
     user_data = UserData.objects.filter(added_by=request.user)
     return render(request, 'agent/index.html', {'user_data': user_data})
 

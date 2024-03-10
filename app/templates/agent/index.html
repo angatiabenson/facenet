@@ -28,7 +28,10 @@
 <body class="container-fluid light">
     <div class="wrapper">
         <main role="main" class="main-content">
-            <div class="row my-5">
+            <div class="row my-5 justify-content-center">
+                <h1>FACENET DASHBOARD</h1>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <div class="card shadow mb-4">
                         <div class="card-header">
@@ -36,34 +39,36 @@
                         </div>
                         <div class="card-body">
                             <div class="col-md-12">
-                                <div class="form-group mb-3">
-                                    <label for="simpleinput">Name</label>
-                                    <input name="name" type="text" id="simpleinput" class="form-control"
-                                        placeholder="Enter name" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="example-email">Phone</label>
-                                    <input name="phone" type="text" id="example-email" name="example-email"
-                                        class="form-control" placeholder="Enter Email" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="example-password">Age</label>
-                                    <input name="age" type="number" id="example-password" class="form-control"
-                                        value="password" placeholder="Enter Age" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="example-palaceholder">Region</label>
-                                    <input name="region" type="text" id="example-palaceholder" class="form-control"
-                                        placeholder="Enter Region" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input name="image" type="file" id="example-palaceholder" class="form-control"
-                                        placeholder="Enter Region" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <button type="submit" class="btn btn-primary btn-lg float-right">Submit</button>
-                                </div>
-
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-group mb-3">
+                                        <label for="simpleinput">Name</label>
+                                        <input name="name" type="text" id="simpleinput" class="form-control"
+                                            placeholder="Enter name" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="example-email">Phone</label>
+                                        <input name="phone" type="text" id="example-email" name="example-email"
+                                            class="form-control" placeholder="Enter Email" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="example-password">Age</label>
+                                        <input name="age" type="number" id="example-password" class="form-control"
+                                            value="password" placeholder="Enter Age" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="example-palaceholder">Region</label>
+                                        <input name="region" type="text" id="example-palaceholder" class="form-control"
+                                            placeholder="Enter Region" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input name="image" type="file" id="example-palaceholder" class="form-control"
+                                            placeholder="Enter Region" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <button type="submit" class="btn btn-primary btn-lg float-right">Submit</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div> <!-- / .card -->
@@ -81,72 +86,29 @@
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Phone</th>
+                                            <th>Age</th>
                                             <th>Region</th>
                                             <th>Image</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for data in user_data %}
                                         <tr>
-                                            <td>1</td>
-                                            <td>Angatia Benson</td>
-                                            <td>0748355080</td>
-                                            <td>Central</td>
+                                            <td>{{ data.id }}</td>
+                                            <td>{{ data.name }}</td>
+                                            <td>{{ data.phone }}</td>
+                                            <td>{{ data.age }}</td>
+                                            <td>{{ data.region }}</td>
                                             <td>
-                                                <div class="col">
-                                                    <img src="{% static 'app/img/logo.svg' %}" alt=""
-                                                        class="thumbnail-sm img-fluid rounded">
-                                                </div>
+                                                {% if data.image %}
+                                                <img src="{{ data.image }}" alt="User Image"
+                                                    class="thumbnail-sm img-fluid rounded">
+                                                {% else %}
+                                                No Image
+                                                {% endif %}
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Angatia Benson</td>
-                                            <td>0748355080</td>
-                                            <td>Central</td>
-                                            <td>
-                                                <div class="col">
-                                                    <img src="{% static 'app/img/logo.svg' %}" alt=""
-                                                        class="thumbnail-sm img-fluid rounded">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Angatia Benson</td>
-                                            <td>0748355080</td>
-                                            <td>Central</td>
-                                            <td>
-                                                <div class="col">
-                                                    <img src="{% static 'app/img/logo.svg' %}" alt=""
-                                                        class="thumbnail-sm img-fluid rounded">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Angatia Benson</td>
-                                            <td>0748355080</td>
-                                            <td>Central</td>
-                                            <td>
-                                                <div class="col">
-                                                    <img src="{% static 'app/img/logo.svg' %}" alt=""
-                                                        class="thumbnail-sm img-fluid rounded">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Angatia Benson</td>
-                                            <td>0748355080</td>
-                                            <td>Central</td>
-                                            <td>
-                                                <div class="col">
-                                                    <img src="{% static 'app/img/logo.svg' %}" alt=""
-                                                        class="thumbnail-sm img-fluid rounded">
-                                                </div>
-                                            </td>
-                                        </tr>
-
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -154,7 +116,27 @@
                     </div> <!-- / .card -->
                 </div>
             </div>
+            <div class="row my-5 justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">Search User Details by Image</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <input name="image" type="file" id="example-palaceholder" class="form-control"
+                                        placeholder="Enter Region" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <button type="submit" class="btn btn-primary btn-lg float-right">Search</button>
+                                </div>
 
+                            </div>
+                        </div>
+                    </div> <!-- / .card -->
+                </div>
+            </div>
         </main> <!-- main -->
     </div> <!-- .wrapper -->
     <script src="{% static 'app/js/jquery.min.js' %}"></script>

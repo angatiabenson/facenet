@@ -9,7 +9,7 @@ class UserData(models.Model):
     phone = models.CharField(max_length=100, default='')
     age = models.IntegerField(default=0)
     region = models.CharField(max_length=100, default='')
-    image_link = models.TextField()
+    image = models.ImageField(upload_to='user_images/')
 
 
 class FaceMetadata(models.Model):
