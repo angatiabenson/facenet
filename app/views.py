@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .models import UserData, FaceMetadata
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
-import face_rec as fr
+from .face_recognition import extract_face_metadata, compare_faces
 from django.conf import settings
 import os
 
@@ -25,27 +25,29 @@ def user_data_list(request):
         filename = fs.save(image.name, image)
         image_url = fs.url(filename)
 
-        # Create UserData instance
-        data = UserData.objects.create(
-            added_by=request.user,
-            name=name,
-            phone=phone,
-            age=age,
-            region=region,
-            image=image_url
-        )
-
         # Getting the absolute filesystem path of the saved image
         image_abs_path = os.path.join(settings.MEDIA_ROOT, filename)
-        face_data = fr.extract_face_metadata(image_abs_path)
+        face_data = extract_face_metadata(image_abs_path)
 
-        FaceMetadata.objects.create(
-            user=data,
-            face_details=face_data
-        )
+        if face_data is None:
+            messages.error(
+                request, "Invalid image. Your image must have only one clear face.")
+        else:
+            # Create UserData instance
+            data = UserData.objects.create(
+                added_by=request.user,
+                name=name,
+                phone=phone,
+                age=age,
+                region=region,
+                image=image_url
+            )
 
-        user_data = UserData.objects.filter(added_by=request.user)
-        return render(request, 'agent/index.html', {'user_data': user_data})
+            FaceMetadata.objects.create(
+                user_data=data,
+                face_encoding=face_data
+            )
+        return redirect('home')
 
     user_data = UserData.objects.filter(added_by=request.user)
     return render(request, 'agent/index.html', {'user_data': user_data})

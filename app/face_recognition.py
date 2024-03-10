@@ -11,8 +11,10 @@ def extract_face_metadata(image_path):
     # Extract face encodings
     face_encodings = face_recognition.face_encodings(image, face_locations)
     face_encoding = ' '.join(map(str, face_encodings[0]))
-
-    return face_encoding, face_locations
+    if len(face_locations) == 1:
+        return face_encoding
+    else:
+        return None
 
 
 def compare_faces(known_face_encodings, unknown_face_encoding):
