@@ -22,35 +22,35 @@ def generate_face_metadata(request):
     fs.delete(filename)  # Delete the temporarily saved image
 
     if metadata is None:
-        return Response({'message': 'Error occurred', 'error': 'No face metadata found oe image has more than one face.'}, status=404)
+        return Response({'message': 'Error occurred', 'error': 'No face metadata found on the image or image has more than one face.'}, status=404)
 
     return Response({'message': 'Face metadata generated', 'data': metadata})
 
 
 @api_view(['POST'])
 def compare_face_metadata(request):
-    metadata1 = request.data.get('known_face')
-    metadata2 = request.data.get('unknown_face')
+    known_face = request.data.get('known_face')
+    unknown_face = request.data.get('unknown_face')
 
-    if not metadata1 or not metadata2:
+    if not known_face or not unknown_face:
         return Response({'message': 'Error occurred', 'error': 'Please provide both metadata for known and unknown faces.'}, status=400)
 
     try:
-        metadata1_list = [float(num) for num in metadata1.split(' ')]
-        metadata2_list = [float(num) for num in metadata2.split(' ')]
+        known_face_list = [float(num) for num in known_face.split(' ')]
+        unknown_face_list = [float(num) for num in unknown_face.split(' ')]
+
+        np.array(known_face_list)
+        np.array(unknown_face_list)
     except ValueError:
         return Response({'message': 'Error occurred', 'error': 'Metadata should be a string of numbers separated by spaces " ".'}, status=400)
 
-    metadata1_array = np.array(metadata1_list)
-    metadata2_array = np.array(metadata2_list)
-
     # Assuming you have a function to compare these numpy arrays
     # Implement your comparison logic here
-    are_similar = compare_faces(metadata1_array, metadata2_array)
+    are_similar = compare_faces(known_face, unknown_face)
     response_message = ""
     if are_similar:
-        response_message = "same"
+        response_message = "positive"
     else:
-        response_message = "not same"
+        response_message = "negative"
 
-    return Response({'message': 'Error occurred', 'data': response_message})
+    return Response({'message': 'Face metadata comparison results', 'data': response_message})
